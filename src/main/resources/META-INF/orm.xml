@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
+                    http://xmlns.jcp.org/xml/ns/persistence/orm_2_2.xsd" version="2.2">
+    <named-query name="findAllBeers">
+        <query><![CDATA[SELECT b FROM Beers b WHERE b.alcohol BETWEEN 5 AND 8]]></query>
+    </named-query>
+    <named-query name="findAllBeersWithDifferentPercentages">
+        <query><![CDATA[SELECT b FROM Beers b WHERE b.alcohol IN (4, 6, 8, 10)]]></query>
+    </named-query>
+    <named-query name="findAllBeersWithKriek">
+        <query><![CDATA[SELECT b FROM Beers b WHERE b.name LIKE '%Kriek%']]></query>
+    </named-query>
+    <named-query name="findAllGentBeers">
+        <query><![CDATA[SELECT b FROM Beers b WHERE b.brewer.zipCode = 9000]]></query>
+    </named-query>
+    <named-query name="findAllTripelBeers">
+        <query><![CDATA[SELECT b FROM Beers b WHERE b.category.name = 'tripel']]></query>
+    </named-query>
+    <named-query name="findAllHeavyCategories">
+        <query><![CDATA[SELECT DISTINCT c FROM Categories c LEFT JOIN c.beers b WHERE b.alcohol = 9 ]]></query>
+    </named-query>
+    <named-query name="findAllVeryHeavyBrewers">
+        <query><![CDATA[SELECT DISTINCT b FROM Brewers b LEFT JOIN b.beers be WHERE be.alcohol = 10]]></query>
+    </named-query>
+    <named-query name="findAllPilsBrewers">
+        <query>
+            <![CDATA[SELECT DISTINCT b FROM Brewers b LEFT JOIN b.beers be LEFT JOIN be.category c WHERE c.name = 'pils']]></query>
+    </named-query>
+    <named-query name="findAllBeersAveragePrice">
+        <query><![CDATA[SELECT AVG( b.price ) FROM Beers b WHERE b.category.name = 'pils']]></query>
+    </named-query>
+</entity-mappings>
